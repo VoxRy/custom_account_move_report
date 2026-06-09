@@ -24,7 +24,6 @@
             </style>
             <div class="page">
                 <div class="row">
-                    <!-- SOL: Fiş bilgileri -->
                     <div class="col-6">
                         <div class="company-title"><span t-field="o.company_id.name"/></div>
                         <table class="info-table">
@@ -36,7 +35,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- SAĞ: Logo ve tam unvan -->
                     <div class="col-6">
                         <div class="logo-area">
                             <img t-if="o.company_id.logo"
@@ -95,6 +93,11 @@
                     </tbody>
                 </table>
             </div>
+        </xpath>
+        <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+            <t t-call="web.minimal_layout">
+                <t t-out="0"/>
+            </t>
         </xpath>
     </template>
 </odoo>
