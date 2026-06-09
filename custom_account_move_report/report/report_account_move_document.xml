@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Rapor tanımını güncelle: header/footer kapat -->
+    <record id="account_ux.action_report_account_move" model="ir.actions.report">
+        <field name="print_report_name">'Muhasebe Fisi - %s' % (object.name)</field>
+    </record>
+
     <template id="report_account_move_document_custom"
               name="report_account_move_document_custom"
               inherit_id="account_ux.report_account_move_document"
@@ -19,12 +24,8 @@
                 .signature-table { margin-top: 6px; }
                 .signature-table th, .signature-table td { border: 1px solid #333 !important; padding: 3px !important; height: 18px; font-size: 7px; }
                 .logo-area { text-align: right; }
-                .logo-area img { max-height: 40px; max-width: 120px; }
+                .logo-area img { max-height: 80px; max-width: 180px; }
                 .company-full-name { font-size: 9px; font-weight: bold; text-align: right; margin-top: 3px; }
-                /* external_layout header ve footer'ı gizle */
-                .header { display: none !important; }
-                .footer { display: none !important; }
-                #wkhtmltopdf_sep_header, #wkhtmltopdf_sep_footer { display: none !important; }
             </style>
             <div class="page">
                 <div class="row">
@@ -97,6 +98,15 @@
                     </tbody>
                 </table>
             </div>
+        </xpath>
+    </template>
+
+    <!-- Rapor action'ına no_header ekle -->
+    <template id="report_account_move_no_header"
+              inherit_id="account_ux.report_account_move"
+              priority="99">
+        <xpath expr="//t[@t-call='account_ux.report_account_move_document']" position="attributes">
+            <attribute name="t-call-assets">False</attribute>
         </xpath>
     </template>
 </odoo>
