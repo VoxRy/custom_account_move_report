@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Rapor tanımını güncelle: header/footer kapat -->
-    <record id="account_ux.action_report_account_move" model="ir.actions.report">
-        <field name="print_report_name">'Muhasebe Fisi - %s' % (object.name)</field>
-    </record>
-
     <template id="report_account_move_document_custom"
               name="report_account_move_document_custom"
               inherit_id="account_ux.report_account_move_document"
@@ -98,15 +93,6 @@
                     </tbody>
                 </table>
             </div>
-        </xpath>
-    </template>
-
-    <!-- Rapor action'ına no_header ekle -->
-    <template id="report_account_move_no_header"
-              inherit_id="account_ux.report_account_move"
-              priority="99">
-        <xpath expr="//t[@t-call='account_ux.report_account_move_document']" position="attributes">
-            <attribute name="t-call-assets">False</attribute>
         </xpath>
     </template>
 </odoo>
