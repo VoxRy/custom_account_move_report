@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_account_move_document_custom"
+              name="report_account_move_document_custom"
+              inherit_id="account_ux.report_account_move_document"
+              priority="99">
+        <xpath expr="//div[@class='page']" position="replace">
+            <style>
+                @page { size: A4 landscape; margin: 8mm 8mm 8mm 8mm; }
+                .page { font-size: 7px; line-height: 1.10; }
+                .slip-title { font-size: 9px; font-weight: bold; margin: 4px 0 3px 0; }
+                .company-title { font-size: 11px; font-weight: bold; margin-bottom: 6px; }
+                table { width: 100%; border-collapse: collapse; font-size: 7px; }
+                .info-table td { border: none !important; padding: 1px 2px !important; font-size: 7px; }
+                .main-table th, .main-table td { border: 1px solid #333 !important; padding: 2px 3px !important; vertical-align: middle; }
+                .main-table th { font-weight: bold; text-align: center; }
+                .text-right { text-align: right; }
+                .text-center { text-align: center; }
+                .signature-table { margin-top: 6px; }
+                .signature-table th, .signature-table td { border: 1px solid #333 !important; padding: 3px !important; height: 18px; font-size: 7px; }
+            </style>
+            <div class="page">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="company-title"><span t-field="o.company_id.name"/></div>
+                        <table class="info-table">
+                            <tbody>
+                                <tr><td width="20%">Fiş Tarihi</td><td>: <span t-field="o.date" t-field-options="{&quot;format&quot;: &quot;dd.MM.yyyy&quot;}"/></td></tr>
+                                <tr><td>Fiş No</td><td>: <span t-field="o.name"/></td></tr>
+                                <tr><td>Giriş No</td><td>: <span t-esc="o.move_sequence_number or ''"/></td></tr>
+                                <tr><td>Yevmiye Tipi</td><td>: <span t-field="o.journal_id.type"/></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-6"></div>
+                </div>
+                <div class="slip-title">Muhasebe Fişi</div>
+                <t t-set="total_debit" t-value="0"/>
+                <t t-set="total_credit" t-value="0"/>
+                <table class="main-table">
+                    <thead>
+                        <tr>
+                            <th width="16%">Hesap Kodu / Adı</th>
+                            <th width="20%">İş Ortağı</th>
+                            <th width="39%">Açıklama</th>
+                            <th width="12.5%">Borç</th>
+                            <th width="12.5%">Alacak</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.line_ids" t-as="l">
+                            <t t-set="total_debit" t-value="total_debit + l.debit"/>
+                            <t t-set="total_credit" t-value="total_credit + l.credit"/>
+                            <td><span t-field="l.account_id.code"/><br/><span t-field="l.account_id.name"/></td>
+                            <td><span t-field="l.partner_id"/></td>
+                            <td><span t-field="l.name"/></td>
+                            <td class="text-right"><span t-field="l.debit"/></td>
+                            <td class="text-right"><span t-field="l.credit"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-right"><strong>Toplam</strong></td>
+                            <td class="text-right"><strong><span t-esc="total_debit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.company_id.currency_id}"/></strong></td>
+                            <td class="text-right"><strong><span t-esc="total_credit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.company_id.currency_id}"/></strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="signature-table">
+                    <thead>
+                        <tr>
+                            <th width="33%">Oluşturan</th>
+                            <th width="34%">Düzenleyen</th>
+                            <th width="33%">Onaylayan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center"><span t-field="o.create_uid"/></td>
+                            <td class="text-center"><span t-field="o.write_uid"/></td>
+                            <td class="text-center"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+    </template>
+</odoo>
