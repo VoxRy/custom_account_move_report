@@ -21,6 +21,10 @@
                 .logo-area { text-align: right; }
                 .logo-area img { max-height: 40px; max-width: 120px; }
                 .company-full-name { font-size: 9px; font-weight: bold; text-align: right; margin-top: 3px; }
+                /* external_layout header ve footer'ı gizle */
+                .header { display: none !important; }
+                .footer { display: none !important; }
+                #wkhtmltopdf_sep_header, #wkhtmltopdf_sep_footer { display: none !important; }
             </style>
             <div class="page">
                 <div class="row">
@@ -93,11 +97,6 @@
                     </tbody>
                 </table>
             </div>
-        </xpath>
-        <xpath expr="//t[@t-call='web.external_layout']" position="replace">
-            <t t-call="web.minimal_layout">
-                <t t-out="0"/>
-            </t>
         </xpath>
     </template>
 </odoo>
