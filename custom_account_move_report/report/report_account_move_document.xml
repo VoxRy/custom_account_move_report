@@ -18,9 +18,13 @@
                 .text-center { text-align: center; }
                 .signature-table { margin-top: 6px; }
                 .signature-table th, .signature-table td { border: 1px solid #333 !important; padding: 3px !important; height: 18px; font-size: 7px; }
+                .logo-area { text-align: right; }
+                .logo-area img { max-height: 40px; max-width: 120px; }
+                .company-full-name { font-size: 9px; font-weight: bold; text-align: right; margin-top: 3px; }
             </style>
             <div class="page">
                 <div class="row">
+                    <!-- SOL: Fiş bilgileri -->
                     <div class="col-6">
                         <div class="company-title"><span t-field="o.company_id.name"/></div>
                         <table class="info-table">
@@ -32,7 +36,17 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-6"></div>
+                    <!-- SAĞ: Logo ve tam unvan -->
+                    <div class="col-6">
+                        <div class="logo-area">
+                            <img t-if="o.company_id.logo"
+                                 t-att-src="'data:image/png;base64,' + o.company_id.logo.decode('utf-8')"
+                                 alt="Logo"/>
+                        </div>
+                        <div class="company-full-name">
+                            <span t-field="o.company_id.name"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="slip-title">Muhasebe Fişi</div>
                 <t t-set="total_debit" t-value="0"/>
